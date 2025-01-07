@@ -12,7 +12,7 @@
 
 第二阶段的更新，重点是在编程实战，前提是对 Vulkan 进行封装，避免上来贴一大坨代码，文章大致结构以代码讲解 + demo 展示为主，然后顺便回顾前面的知识点。
 
-## Vulkan 入门系列文章（理论篇）：
+## Vulkan 入门系列文章（理论篇）
 
 1. [开篇，Vulkan 概述](http://mp.weixin.qq.com/s?__biz=MzIwNTIwMzAzNg==&mid=2654177035&idx=1&sn=48ab8877a7ae1620845dc63b2e7cb070&chksm=8cf35438bb84dd2e919d288deaa06f16580e5cb339d2be2ec606fbf772377dd02bc111df5e34&scene=21#wechat_redirect)
 2. [Vulkan 实例 Instance](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247483992&idx=1&sn=d257569320798c4513752271abc8a77c&scene=21#wechat_redirect)
@@ -43,8 +43,13 @@
 
 18. [Vulkan 同步机制](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484159&idx=1&sn=1afd8c236a7b7a9a74ee42447ed4889f&scene=21#wechat_redirect)
 
-## 相关推荐
+## Vulkan 入门系列文章（实践篇）
 
+1. [Vulkan 绘制一个三角形需要一千行代码，是真的吗？](https://mp.weixin.qq.com/s/DTLxnaDVD55_Y5Y31wT3dg)
+2. [Vulkan 绘制第一个三角形](https://mp.weixin.qq.com/s/pRIr0UpNNbK1nvJvXV3JQA)
+
+## 相关推荐
+- [OpenGL ES 3.0 从入门到精通系统性学习教程](https://github.com/githubhaohao/NDK_OpenGLES_3_0)
 - [Android OpenGL Camera 2.0 实现 30 种滤镜和抖音特效](https://github.com/githubhaohao/OpenGLCamera2)
 - [Android FFmpeg 音视频开发教程](http://mp.weixin.qq.com/s?__biz=MzIwNTIwMzAzNg==&mid=506681298&idx=1&sn=50177285bf0d330d0dfc4e0954d5ad12&chksm=0cf384e13b840df76f89aeb8ac76939ff32b2f9bf600729782d61698181af60d92cce61ee150#rd)
 
