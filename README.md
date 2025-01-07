@@ -1,142 +1,47 @@
 
-# Android OpenGLES 3.0 开发系统性学习教程
+# Vulkan 开发系统性学习教程
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/githubhaohao/NDK_OpenGLES_3_0/blob/master/LICENSE.txt)
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
-[![apk](https://img.shields.io/badge/APK-download-green.svg)](https://github.com/githubhaohao/NDK_OpenGLES_3_0/raw/master/doc/OepnGLES.apk)
-[![GitHub stars](https://img.shields.io/github/stars/githubhaohao/NDK_OpenGLES_3_0)](https://github.com/githubhaohao/NDK_OpenGLES_3_0/stargazers)
 
-备注: 请使用 **Android Studio 4.1+ ，NDK r21，其中一些 Case 的 3D 效果是通过手势触发（转动和缩放）**
+第一阶段的更新覆盖了 Vulkan 的大部分概念和知识点，众所周知，Vulkan 编程的代码量相对于 OpenGL 多了一个数量级（不用害怕，后面Vulkan封装一下，用起来也会非常简洁）。
 
-## 作者声明
+这一系列文章都在避免一上去就讲一大堆代码（精简了很多没必要展示的代码），追求一篇文章只讲一个概念，奉行概念先行。
 
-有读者反馈，最近有培训机构将本教程进行打包售卖，严重违背了本项目免费开源的初衷。再次声明：**任何商业机构或个人未经作者【微信ID：Byte-Flow 】许可，不得将本教程及其项目配套代码用于 "打包贩卖、出书和卖课" 等商业用途，一经发现，全网声讨。再次感谢各位读者的监督和反馈。**
+这样，Vulkan 的概念掌握的差不多了，我们再去看代码,  这样很容易把握住整体代码逻辑，不至于一上来全是他喵的结构体，眼花缭乱，看着费劲。
 
-## 展示图
+第二阶段的更新，重点是在编程实战，前提是对 Vulkan 进行封装，避免上来贴一大坨代码，文章大致结构以代码讲解 + demo 展示为主，然后顺便回顾前面的知识点。
 
-![beating_heart](https://github.com/githubhaohao/NDK_OpenGLES_3_0/blob/master/gif/beating_heart.gif)
-![poly_3d_model](https://github.com/githubhaohao/NDK_OpenGLES_3_0/blob/master/gif/poly.gif)
+## Vulkan 入门系列文章（理论篇）：
 
-![ogl_head](https://github.com/githubhaohao/NDK_OpenGLES_3_0/blob/master/gif/head.gif)
+1. [开篇，Vulkan 概述](http://mp.weixin.qq.com/s?__biz=MzIwNTIwMzAzNg==&mid=2654177035&idx=1&sn=48ab8877a7ae1620845dc63b2e7cb070&chksm=8cf35438bb84dd2e919d288deaa06f16580e5cb339d2be2ec606fbf772377dd02bc111df5e34&scene=21#wechat_redirect)
+2. [Vulkan 实例 Instance](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247483992&idx=1&sn=d257569320798c4513752271abc8a77c&scene=21#wechat_redirect)
+3. [Vulkan 物理设备](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484002&idx=1&sn=fc4e1bacb8485b71bef29506764b6a54&scene=21#wechat_redirect)
+4. [Vulkan 设备队列](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484010&idx=1&sn=6613d788307659ee1552a309f5d5a48e&scene=21#wechat_redirect)
+5. [Vulkan 逻辑设备](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484024&idx=1&sn=86bf2a35039f418c41fe7b89f0664824&scene=21#wechat_redirect)
+6. [Vulkan 内存管理](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484078&idx=1&sn=db5fea6f4847368b0bc10d9f8081850d&scene=21#wechat_redirect)
+7. [Vulkan 缓存](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484045&idx=1&sn=9b46909e161dd7ea46a80223b784aa43&scene=21#wechat_redirect)
+8. [Vulkan 图像](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484057&idx=1&sn=6e82e29bd2487495f856f57fb8facdbc&scene=21#wechat_redirect)
 
+9. [Vulkan 图像视图](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484081&idx=1&sn=d569058f15352b094000a2a67dc8f2be&scene=21#wechat_redirect)
 
-## 基础篇
+10. [Vulkan 窗口表面（Surface）](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484096&idx=1&sn=1d8e5e37927a9294835de2b7086b9cac&scene=21#wechat_redirect)
 
-- [OpenGL ES 3.0 开发（01）：绘制一个三角形](https://blog.csdn.net/Kennethdroid/article/details/95622391)
+11. [Vulkan 交换链](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484100&idx=1&sn=3293d353c3f27f914fc57ea2a32e47dd&scene=21#wechat_redirect)
 
-- [OpenGL ES 3.0 开发（02）：纹理映射](https://blog.csdn.net/Kennethdroid/article/details/96887637)
+12. [Vulkan 渲染通道](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484102&idx=1&sn=13570a8fa2a1a142041eba8a7de3c7a6&scene=21#wechat_redirect)
 
-- [OpenGL ES 3.0 开发（03）：YUV 渲染](https://blog.csdn.net/Kennethdroid/article/details/97153407)
+13. [Vulkan 帧缓冲区（FrameBuffer）](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484104&idx=1&sn=4c0f709c30f215d96f68a45bb59c9fbe&scene=21#wechat_redirect)
 
-- [OpenGL ES 3.0 开发（04）：VBO、EBO 和 VAO](https://blog.csdn.net/Kennethdroid/article/details/98088890)
+14. [Vulkan 图形管线](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484106&idx=1&sn=8ee3a34998635041822beb9d52dcea98&scene=21#wechat_redirect)
 
-- [OpenGL ES 3.0 开发（05）：FBO 离屏渲染](https://blog.csdn.net/Kennethdroid/article/details/98883854)
+15. [Vulkan 着色器](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484120&idx=1&sn=c14e3390020281e22eac9bc9f1dbe5a2&scene=21#wechat_redirect)
 
-- [OpenGL ES 3.0 开发（06）：EGL](https://blog.csdn.net/Kennethdroid/article/details/99655635)
+16. [Vukan 描述符集](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484131&idx=1&sn=fa06b8b700151df47876dd26aa6a900b&scene=21#wechat_redirect)
 
-- [OpenGL ES 3.0 开发（07）：Transform Feedback](https://blog.csdn.net/Kennethdroid/article/details/100083599)
+17. [Vulkan 指令缓存](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484151&idx=1&sn=103fd546f056d02f6563f7ea78f8aa7c&scene=21#wechat_redirect)
 
-- [OpenGL ES 3.0 开发（08）：坐标系统](https://blog.csdn.net/Kennethdroid/article/details/100898155)
-
-- [OpenGL ES 3.0 开发（09）：光照基础](https://blog.csdn.net/Kennethdroid/article/details/101220947)
-
-- [OpenGL ES 3.0 开发（10）：深度测试](https://blog.csdn.net/Kennethdroid/article/details/101709694)
-
-- [OpenGL ES 3.0 开发（11）：模板测试](https://blog.csdn.net/Kennethdroid/article/details/102533260)
-
-- [OpenGL ES 3.0 开发（12）：混合](https://blog.csdn.net/Kennethdroid/article/details/102630858)
-
-- [OpenGL ES 3.0 开发（13）：实例化（Instancing）](https://blog.csdn.net/Kennethdroid/article/details/102770813)
-
-- [OpenGL ES 3.0 开发（14）：粒子（Particles）](https://blog.csdn.net/Kennethdroid/article/details/102881654)
-
-- [OpenGL ES 3.0 开发（15）：立方体贴图（天空盒）](https://blog.csdn.net/Kennethdroid/article/details/102991524)
-
-- [OpenGL ES 3.0 开发（16）：相机预览](https://blog.csdn.net/Kennethdroid/article/details/103189489)
-
-- [OpenGL ES 3.0 开发（17）：相机基础滤镜](https://blog.csdn.net/Kennethdroid/article/details/103335598)
-
-- [OpenGL ES 3.0 开发（18）：相机 LUT 滤镜](https://blog.csdn.net/Kennethdroid/article/details/103355129)
-
-- [OpenGL ES 3.0 开发（19）：相机抖音滤镜](https://blog.csdn.net/Kennethdroid/article/details/103449935)
-
-- [OpenGL ES 3.0 开发（20）：3D 模型](https://blog.csdn.net/Kennethdroid/article/details/103771970)
-
-- [OpenGL ES 3.0 开发（21）：3D 模型加载和渲染](https://blog.csdn.net/Kennethdroid/article/details/103825593)
-
-- [OpenGL ES 3.0 开发（22）：PBO](https://blog.csdn.net/Kennethdroid/article/details/103931627)
-
-- [OpenGL ES 3.0 开发（23）：多重渲染目标（MRT）](https://blog.csdn.net/Kennethdroid/article/details/108873665)
-
-- [OpenGL ES 3.0 开发（24）：帧缓冲区位块传送（Blit）](https://blog.csdn.net/Kennethdroid/article/details/109032497)
-
-- [OpenGL ES 3.0 开发（25）：TBO（GLES 3.1）](https://blog.csdn.net/Kennethdroid/article/details/109749018)
-
-- [OpenGL ES 3.0 开发（26）：UBO（GLES 3.2）](https://blog.csdn.net/Kennethdroid/article/details/109749018)
-
-
-## 展示图
-
-![avatar](https://github.com/githubhaohao/NDK_OpenGLES_3_0/blob/master/gif/avatar.gif)
-![board](https://github.com/githubhaohao/NDK_OpenGLES_3_0/blob/master/gif/draw_board.gif)
-
-## 应用篇
-
-- [Android OpenGL ES 实现心动特效](https://blog.csdn.net/Kennethdroid/article/details/104536532)
-
-- [Android OpenGL ES 实现瘦身大长腿效果](https://blog.csdn.net/Kennethdroid/article/details/104546234)
-
-- [Android OpenGL ES 绘制贝塞尔曲线](https://blog.csdn.net/Kennethdroid/article/details/104721096)
-
-- [Android OpenGL ES 实现瘦脸大眼效果](https://blog.csdn.net/Kennethdroid/article/details/104907763)
-
-- [Android OpenGL ES 实现头部形变和头部晃动效果](https://blog.csdn.net/Kennethdroid/article/details/105208054)
-
-- [Android OpenGL ES 实现实时音频的可视化](https://blog.csdn.net/Kennethdroid/article/details/106128767)
-
-- [Android OpenGL ES 实现刮刮卡和手写板功能](https://blog.csdn.net/Kennethdroid/article/details/106339286)
-
-- [Android OpenGL ES 实现 3D 阿凡达效果](https://blog.csdn.net/Kennethdroid/article/details/106423475)
-
-- [Android OpenGL ES 实现动态（水波纹）涟漪效果](https://blog.csdn.net/Kennethdroid/article/details/106556584)
-
-- [Android OpenGL ES 调试工具](https://blog.csdn.net/Kennethdroid/article/details/106695602)
-
-- [Android OpenGL ES 传输超大数组给着色器程序](https://blog.csdn.net/Kennethdroid/article/details/109749018)
-
-- [面试中经常被问到的 OpenGL ES 对象，你知道的有哪些？](https://blog.csdn.net/Kennethdroid/article/details/112379836)
-
-- [Android OpenGL ES 渲染图像读取哪家强](https://blog.csdn.net/Kennethdroid/article/details/109339906)
-
-- [利用 OpenGL ES 给视频播放器和相机做个字符画滤镜](https://blog.csdn.net/Kennethdroid/article/details/113379112)
-
-- [使用 OpenGL 实现 RGB 到 YUV 的图像格式转换](https://t.1yb.co/uvfH)
-
-- [OpenGL ES 共享上下文时，可以共享哪些资源？](https://t.1yb.co/uvfS)
-
-- [OpenGL ES 文字渲染方式有几种？](http://mp.weixin.qq.com/s?__biz=MzIwNTIwMzAzNg==&mid=506682327&idx=1&sn=38f091451bb508b66933f2213ec0fb7d&chksm=0cf388e43b8401f2e115aa58b0ad8facb462363f3a1ed99604f9ea5c51b2bc815d8f237fc6e9#rd)
-
-- [OpenGL ES 文字渲染进阶：渲染中文字体](https://t.1yb.co/vezw)
-
-- [OpenGL ES + 人像抠图实现人像留色](https://t.1yb.co/z84y) 
-
-- [OpenGL ES + GLTranslations 实现各种图像转场效果](https://t.1yb.co/z8do)
-
-- [OpenGL ES 实现抖音传送带特效](https://mp.weixin.qq.com/s/Px6UeZuavqkKS0hek27vog)
-
-- [OpenGL ES 实现抖音“蓝线挑战”特效](https://blog.csdn.net/Kennethdroid/article/details/132657029)
-  
-- [OpenGL ES 利用 Shader 实现 RGBA 到 NV21 图像格式转换](https://blog.csdn.net/Kennethdroid/article/details/132055489)
-
-- [OpenGL ES 修图（P 图）功能](https://blog.csdn.net/Kennethdroid/article/details/133125813)
-
-- [OpenGL ES 抖音“传送带“特效实现终极版](https://blog.csdn.net/Kennethdroid/article/details/135014109)
-
-- [OpenGL ES 3.0 帧缓冲区失效 glInvalidateFramebuffer](https://blog.csdn.net/Kennethdroid/article/details/135203000)
-
-- [OpenGL ES 如何直接渲染 P010、P016 格式图像？](https://blog.csdn.net/Kennethdroid/article/details/135348813)
-
-- [OpenGL ES 渲染 NV21、NV12、I420、YV12、YUYV、UYVY、I444（建议收藏）](https://blog.csdn.net/Kennethdroid/article/details/136213988)
+18. [Vulkan 同步机制](https://mp.weixin.qq.com/s?__biz=Mzg2NDc1OTIzOQ==&mid=2247484159&idx=1&sn=1afd8c236a7b7a9a74ee42447ed4889f&scene=21#wechat_redirect)
 
 ## 相关推荐
 
