@@ -1,6 +1,10 @@
-//
-// Created by 字节流动 on 2024/7/11.
-//
+/**
+ *
+ * Created by 公众号：字节流动 on 2025/01/12.
+ * https://github.com/githubhaohao/android-vulkan-tutorials
+ * 最新文章首发于公众号：字节流动，有疑问或者技术交流可以添加微信 Byte-Flow ,领取视频教程, 拉你进技术交流群
+ *
+ * */
 
 #ifndef ANDROID_VULKAN_TUTORIALS_VKSAMPLE02_UBO_H
 #define ANDROID_VULKAN_TUTORIALS_VKSAMPLE02_UBO_H
