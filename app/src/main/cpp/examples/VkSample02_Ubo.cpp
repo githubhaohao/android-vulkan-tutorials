@@ -34,8 +34,8 @@ VkSample02_Ubo::~VkSample02_Ubo() {
         vkDestroyDescriptorSetLayout(device, descriptorSetLayout, nullptr);
         vertexBuffer.destroy();
         indexBuffer.destroy();
-        uniformBuffers.view.destroy();
-        uniformBuffers.dynamic.destroy();
+        uniformBuffers.projectionView.destroy();
+        uniformBuffers.dynamicModel.destroy();
     }
     NativeImageUtil::FreeNativeImage(&renderImage);
 }
@@ -130,9 +130,9 @@ void VkSample02_Ubo::createDescriptors() {
 
     std::vector<VkWriteDescriptorSet> writeDescriptorSets = {
             // Binding 0 : Projection/View matrix as uniform buffer
-            vks::initializers::writeDescriptorSet(descriptorSet, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 0, &uniformBuffers.view.descriptor),
+            vks::initializers::writeDescriptorSet(descriptorSet, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 0, &uniformBuffers.projectionView.descriptor),
             // Binding 1 : Instance matrix as dynamic uniform buffer
-            vks::initializers::writeDescriptorSet(descriptorSet, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1, &uniformBuffers.dynamic.descriptor),
+            vks::initializers::writeDescriptorSet(descriptorSet, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1, &uniformBuffers.dynamicModel.descriptor),
     };
     vkUpdateDescriptorSets(device, static_cast<uint32_t>(writeDescriptorSets.size()), writeDescriptorSets.data(), 0, nullptr);
 }
@@ -208,22 +208,22 @@ void VkSample02_Ubo::createUniformBuffers() {
     VK_CHECK_RESULT(vulkanDevice->createBuffer(
             VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
             VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
-            &uniformBuffers.view,
+            &uniformBuffers.projectionView,
             sizeof(uboVS)));
 
     // Uniform buffer object with per-object matrices
     VK_CHECK_RESULT(vulkanDevice->createBuffer(
             VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
             VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
-            &uniformBuffers.dynamic,
+            &uniformBuffers.dynamicModel,
             bufferSize));
 
     // Override descriptor range to [base, base + dynamicAlignment]
-    uniformBuffers.dynamic.descriptor.range = dynamicAlignment;
+    uniformBuffers.dynamicModel.descriptor.range = dynamicAlignment;
 
     // Map persistent
-    VK_CHECK_RESULT(uniformBuffers.view.map());
-    VK_CHECK_RESULT(uniformBuffers.dynamic.map());
+    VK_CHECK_RESULT(uniformBuffers.projectionView.map());
+    VK_CHECK_RESULT(uniformBuffers.dynamicModel.map());
 
     // Prepare per-object matrices with offsets and random rotations
     std::default_random_engine rndEngine(benchmark.active ? 0 : (unsigned)time(nullptr));
@@ -244,7 +244,7 @@ void VkSample02_Ubo::updateUniformBuffers()
     uboVS.projection = camera.matrices.perspective;
     uboVS.view = camera.matrices.view;
 
-    memcpy(uniformBuffers.view.mapped, &uboVS, sizeof(uboVS));
+    memcpy(uniformBuffers.projectionView.mapped, &uboVS, sizeof(uboVS));
 }
 
 void VkSample02_Ubo::updateDynamicUniformBuffer()
@@ -282,11 +282,11 @@ void VkSample02_Ubo::updateDynamicUniformBuffer()
 
     animationTimer = 0.0f;
 
-    memcpy(uniformBuffers.dynamic.mapped, uboDataDynamic.model, uniformBuffers.dynamic.size);
+    memcpy(uniformBuffers.dynamicModel.mapped, uboDataDynamic.model, uniformBuffers.dynamicModel.size);
     // Flush to make changes visible to the host
     VkMappedMemoryRange memoryRange = vks::initializers::mappedMemoryRange();
-    memoryRange.memory = uniformBuffers.dynamic.memory;
-    memoryRange.size = uniformBuffers.dynamic.size;
+    memoryRange.memory = uniformBuffers.dynamicModel.memory;
+    memoryRange.size = uniformBuffers.dynamicModel.size;
     vkFlushMappedMemoryRanges(device, 1, &memoryRange);
 }
 

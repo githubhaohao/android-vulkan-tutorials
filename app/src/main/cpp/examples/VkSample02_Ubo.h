@@ -65,8 +65,8 @@ public:
     uint32_t indexCount{ 0 };
 
     struct {
-        vks::Buffer view;
-        vks::Buffer dynamic;
+        vks::Buffer projectionView;
+        vks::Buffer dynamicModel;
     } uniformBuffers;
 
     struct {
